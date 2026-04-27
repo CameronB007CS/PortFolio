@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cameron Brotherton — Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --c-bg: #F9F8F5;
+    --c-surface: #FFFFFF;
+    --c-border: rgba(0,0,0,0.08);
+    --c-text: #1A1A18;
+    --c-muted: #6B6B66;
+    --c-tag-bg: #EEECEA;
+    --c-tag-text: #4A4A46;
+    --c-badge-bg: #1A1A18;
+    --c-badge-text: #F9F8F5;
+    --c-link: #185FA5;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 12px;
+    --radius-sm: 6px;
+  }
+  body { font-family: var(--sans); background: var(--c-bg); color: var(--c-text); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,245,0.92); backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid var(--c-border);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-logo { font-family: var(--mono); font-size: 13px; color: var(--c-muted); }
+  .nav-logo span { color: var(--c-text); font-weight: 500; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--c-muted); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--c-text); }
+  html { scroll-behavior: smooth; }
+  main { max-width: 780px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  .hero { padding: 5rem 0 3.5rem; border-bottom: 0.5px solid var(--c-border); }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; color: var(--c-muted);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--c-muted); }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; }
+  h1 em { font-style: normal; font-weight: 500; }
+  .hero-bio { font-size: 16px; color: var(--c-muted); max-width: 520px; line-height: 1.75; margin-bottom: 2rem; }
+  .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px;
+    border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--c-badge-bg); color: var(--c-badge-text); }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost { background: transparent; color: var(--c-text); border: 0.5px solid var(--c-border); }
+  .btn-ghost:hover { background: var(--c-tag-bg); }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #3B6D11; display: inline-block; animation: pulse 2.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--c-muted);
+    background: var(--c-tag-bg); padding: 6px 12px; border-radius: 100px; border: 0.5px solid var(--c-border);
+  }
+  section { padding: 3.5rem 0; border-bottom: 0.5px solid var(--c-border); }
+  section:last-child { border-bottom: none; }
+  .section-label { font-family: var(--mono); font-size: 11px; color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.75rem; }
+  .projects-grid { display: grid; gap: 12px; margin-top: 1.5rem; }
+  .project-card { background: var(--c-surface); border: 0.5px solid var(--c-border); border-radius: var(--radius); padding: 1.25rem 1.375rem; transition: border-color 0.15s; }
+  .project-card:hover { border-color: rgba(0,0,0,0.2); }
+  .project-header { display: flex; align-items: center; margin-bottom: 0.6rem; }
+  .project-name { font-size: 14px; font-weight: 500; }
+  .project-badge { font-size: 10px; font-family: var(--mono); background: var(--c-badge-bg); color: var(--c-badge-text); padding: 3px 8px; border-radius: 100px; white-space: nowrap; margin-left: 8px; flex-shrink: 0; }
+  .project-desc { font-size: 13px; color: var(--c-muted); line-height: 1.65; margin-bottom: 0.875rem; }
+  .project-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .project-links { display: flex; gap: 8px; }
+  .project-link { font-size: 12px; color: var(--c-link); text-decoration: none; font-family: var(--mono); }
+  .project-link:hover { text-decoration: underline; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-size: 11px; background: var(--c-tag-bg); color: var(--c-tag-text); padding: 3px 9px; border-radius: 100px; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 1.5rem; }
+  .skill-card { background: var(--c-surface); border: 0.5px solid var(--c-border); border-radius: var(--radius); padding: 1rem 1.125rem; }
+  .skill-card-label { font-size: 11px; font-family: var(--mono); color: var(--c-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .exp-list { display: grid; gap: 1.75rem; margin-top: 1.5rem; }
+  .exp-item { display: grid; grid-template-columns: 1fr auto; gap: 4px; }
+  .exp-role { font-size: 14px; font-weight: 500; }
+  .exp-org { font-size: 13px; color: var(--c-muted); }
+  .exp-date { font-family: var(--mono); font-size: 11px; color: var(--c-muted); text-align: right; padding-top: 2px; white-space: nowrap; }
+  .exp-desc { font-size: 13px; color: var(--c-muted); grid-column: 1 / -1; margin-top: 4px; line-height: 1.65; }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 1.5rem; }
+  .cert-card { background: var(--c-surface); border: 0.5px solid var(--c-border); border-radius: var(--radius); padding: 0.875rem 1rem; display: flex; align-items: flex-start; gap: 10px; }
+  .cert-icon { width: 28px; height: 28px; border-radius: 6px; background: var(--c-tag-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cert-icon svg { width: 14px; height: 14px; color: var(--c-muted); }
+  .cert-name { font-size: 12px; font-weight: 500; line-height: 1.4; }
+  .cert-issuer { font-size: 11px; color: var(--c-muted); font-family: var(--mono); margin-top: 2px; }
+  .contact-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+  .contact-chip {
+    display: inline-flex; align-items: center; gap: 7px; background: var(--c-surface);
+    border: 0.5px solid var(--c-border); border-radius: 100px; padding: 8px 16px;
+    font-size: 13px; text-decoration: none; color: var(--c-text); transition: background 0.15s; font-family: var(--mono);
+  }
+  .contact-chip:hover { background: var(--c-tag-bg); }
+  .contact-chip svg { width: 14px; height: 14px; color: var(--c-muted); flex-shrink: 0; }
+  footer { text-align: center; padding: 2.5rem 1.5rem; font-family: var(--mono); font-size: 11px; color: var(--c-muted); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>Cameron Brotherton</span> / portfolio</div>
+  <ul class="nav-links">
+    <li><a href="https://github.com/CameronB007CS" target="_blank">Projects</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('certifications').scrollIntoView({behavior:'smooth'})">Certs</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-eyebrow">CS Student &amp; Aspiring Developer</div>
+    <h1>Hi, I'm <em>Cameron Brotherton</em>.<br>I build software &amp; explore security.</h1>
+    <p class="hero-bio">
+      Bachelor of Computer Science student at SAE College, Sydney. I design and build functional software, network simulations, and web applications — and I bring the same drive and work ethic from years of fast-paced hospitality and retail to everything I do in tech. Currently seeking internship and entry-level opportunities in software development and cybersecurity.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/CameronB007CS" target="_blank" class="btn btn-primary">View my work</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="btn btn-ghost">Get in touch</a>
+      <span class="hero-status"><span class="status-dot"></span> Open to internships &amp; grad roles</span>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">// projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">Inventory Management System<span class="project-badge">Featured</span></div>
+        </div>
+        <p class="project-desc">A functional inventory management application built to track stock levels, manage product records, and generate basic reporting. Designed with a clean interface and persistent data storage for real-world usability.</p>
+        <div class="project-footer">
+          <div class="skill-tags"><span class="tag">Python</span><span class="tag">File I/O</span><span class="tag">CLI</span></div>
+          <div class="project-links"><a href="https://github.com/CameronB007CS" class="project-link" target="_blank">GitHub ↗</a></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">Cisco Packet Tracer — Network Design</div>
+        </div>
+        <p class="project-desc">Designed and simulated a multi-device enterprise network topology using Cisco Packet Tracer. Configured routers, switches, VLANs, DHCP, and basic access control lists to demonstrate core networking fundamentals.</p>
+        <div class="project-footer">
+          <div class="skill-tags"><span class="tag">Cisco Packet Tracer</span><span class="tag">Networking</span><span class="tag">VLANs</span><span class="tag">TCP/IP</span></div>
+          <div class="project-links"><a href="https://github.com/CameronB007CS" class="project-link" target="_blank">GitHub ↗</a></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">Portfolio Website</div>
+        </div>
+        <p class="project-desc">This portfolio — built from scratch with semantic HTML and CSS. Fully responsive, hosted on GitHub Pages. Designed with a clean, minimal aesthetic tailored for a technical audience.</p>
+        <div class="project-footer">
+          <div class="skill-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">GitHub Pages</span></div>
+          <div class="project-links">
+            <a href="https://github.com/CameronB007CS" class="project-link" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">// skills</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-label">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Networking</div>
+        <div class="skill-tags">
+          <span class="tag">Cisco Packet Tracer</span><span class="tag">TCP/IP</span><span class="tag">VLANs</span><span class="tag">DHCP</span><span class="tag">ACLs</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Tools &amp; Cloud</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Linux</span><span class="tag">AWS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Professional</div>
+        <div class="skill-tags">
+          <span class="tag">Project Management</span><span class="tag">Data Analysis</span><span class="tag">Report Writing</span><span class="tag">Stakeholder Comms</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-label">// experience</div>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Work Experience — Amazon Web Services</div>
+          <div class="exp-org">AWS, Sydney</div>
+        </div>
+        <div class="exp-date">2024</div>
+        <div class="exp-desc">Gained hands-on exposure to cloud infrastructure and internal systems at one of the world's leading cloud providers. Observed real-world deployment pipelines, data centre operations, and enterprise-scale engineering practices.</div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Office Administrator</div>
+          <div class="exp-org">JLA Insolvency &amp; Advisory, Sydney</div>
+        </div>
+        <div class="exp-date">Oct 2023 – Jan 2024</div>
+        <div class="exp-desc">Managed daily administrative operations including client file management, record scanning, and multi-client support. Developed strong organisational, data-handling, and privacy-compliance skills in a professional services environment.</div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Front of House / Barback / Florist</div>
+          <div class="exp-org">Doltone Hospitality — Hay Street Market, Sydney</div>
+        </div>
+        <div class="exp-date">Mar 2025 – Present</div>
+        <div class="exp-desc">Working across multiple roles in a high-volume hospitality venue. Developed versatility, composure under pressure, and strong customer-facing skills across FOH, bar, and floral departments.</div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">MMA Instructor (Volunteer)</div>
+          <div class="exp-org">Giant Martial Arts, Sydney</div>
+        </div>
+        <div class="exp-date">Jan 2017 – Present</div>
+        <div class="exp-desc">Coached students of all skill levels, designed training schedules, and provided structured feedback. Built strong leadership, communication, and mentoring abilities over 8+ years of consistent voluntary involvement.</div>
+      </div>
+
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Team Member / Sales Assistant</div>
+          <div class="exp-org">Universal Store, Sydney</div>
+        </div>
+        <div class="exp-date">Jan 2023 – Sep 2023</div>
+        <div class="exp-desc">Delivered high-quality customer service, managed stock and POS operations, and consistently met sales targets across multiple store sections.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="section-label">// certifications &amp; education</div>
+    <div class="certs-grid">
+
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+        <div>
+          <div class="cert-name">Bachelor of Computer Science</div>
+          <div class="cert-issuer">SAE College, Sydney — In Progress</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5 6.5 5z"/></svg></div>
+        <div>
+          <div class="cert-name">Higher School Certificate</div>
+          <div class="cert-issuer">Marist Catholic College Penshurst — 2024</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 8h6M5 11h4"/></svg></div>
+        <div>
+          <div class="cert-name">Cert III — Information &amp; Digital Technology</div>
+          <div class="cert-issuer">La Salle Saint Yon College — 2024</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M8 2v12M2 8h12"/></svg></div>
+        <div>
+          <div class="cert-name">First Aid Certificate</div>
+          <div class="cert-issuer">Surf Life Saving NSW</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6"/><path d="M6 8l1.5 1.5L10 6"/></svg></div>
+        <div>
+          <div class="cert-name">Responsible Service of Alcohol (RSA)</div>
+          <div class="cert-issuer">RSA Express Pty Ltd</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6"/><path d="M6 8l1.5 1.5L10 6"/></svg></div>
+        <div>
+          <div class="cert-name">Food Handlers Certificate</div>
+          <div class="cert-issuer">NSW Food Authority</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">// contact</div>
+    <p style="color: var(--c-muted); font-size: 14px; margin-bottom: 0;">Based in Sydney, NSW. Open to remote and on-site opportunities in software development and cybersecurity.</p>
+    <div class="contact-row">
+      <a href="mailto:cxb.brotherton@gmail.com" class="contact-chip">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4.5l7 5 7-5"/></svg>
+        cxb.brotherton@gmail.com
+      </a>
+      <a href="https://github.com/CameronB007CS" target="_blank" class="contact-chip">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M8 1C4.134 1 1 4.134 1 8c0 3.09 2.003 5.715 4.782 6.635.35.064.478-.152.478-.338 0-.166-.006-.607-.01-1.19-1.947.422-2.358-.937-2.358-.937-.318-.808-.777-1.023-.777-1.023-.635-.434.048-.425.048-.425.702.049 1.071.72 1.071.72.624 1.068 1.636.76 2.035.581.063-.451.244-.76.444-.935-1.554-.176-3.188-.777-3.188-3.46 0-.764.273-1.39.72-1.88-.072-.177-.312-.89.069-1.854 0 0 .587-.188 1.923.716A6.697 6.697 0 018 4.98c.594.003 1.192.08 1.75.235 1.334-.904 1.92-.716 1.92-.716.382.964.142 1.677.07 1.854.449.49.72 1.116.72 1.88 0 2.689-1.637 3.282-3.196 3.455.251.217.475.644.475 1.299 0 .937-.008 1.693-.008 1.923 0 .187.126.405.48.337C12.999 13.712 15 11.088 15 8c0-3.866-3.134-7-7-7z"/></svg>
+        CameronB007CS
+      </a>
+      <a href="https://www.linkedin.com/in/cameron-brotherton-979a68305" target="_blank" class="contact-chip">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="1" y="1" width="14" height="14" rx="2.5"/><path d="M5 6v5M5 4.5v.01M8 11V8c0-1 .5-2 2-2M11 11V8"/></svg>
+        cameron-brotherton
+      </a>
+      <a href="tel:0420871939" class="contact-chip">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M3 2h3l1.5 3.5-1.5 1a8 8 0 003.5 3.5l1-1.5L14 10v3a1 1 0 01-1 1A11 11 0 012 3a1 1 0 011-1z"/></svg>
+        0420 871 939
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>coded in VSCode &amp; built with html · cameron brotherton · 2025</footer>
+
+</body>
+</html>
